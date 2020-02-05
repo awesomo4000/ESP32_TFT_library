@@ -12,7 +12,7 @@
 #include "freertos/FreeRTOS.h"
 #include "tft.h"
 #include <math.h>
-#include "esp32/rom/tjpgd.h"
+#include "rom/tjpgd.h"
 
 
 #define DEG_TO_RAD 0.01745329252
