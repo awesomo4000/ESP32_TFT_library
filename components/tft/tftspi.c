@@ -34,6 +34,10 @@ uint8_t tft_disp_type = DEFAULT_DISP_TYPE;
 spi_lobo_device_handle_t tft_disp_spi = NULL;
 spi_lobo_device_handle_t tft_ts_spi = NULL;
 
+// CGRAM offsets
+uint32_t rowstart = 0;
+uint32_t colstart = 0;
+
 // ====================================================
 
 
@@ -189,6 +193,12 @@ static void IRAM_ATTR disp_spi_transfer_addrwin(uint16_t x1, uint16_t x2, uint16
 
 	tft_disp_spi->host->hw->cmd.usr = 1; // Start transfer
 
+#ifdef CGRAM_OFFSET
+    x1 += rowstart;
+    x2 += rowstart;
+#endif
+
+
 	wd = (uint32_t)(x1>>8);
 	wd |= (uint32_t)(x1&0xff) << 8;
 	wd |= (uint32_t)(x2>>8) << 16;
@@ -205,6 +215,11 @@ static void IRAM_ATTR disp_spi_transfer_addrwin(uint16_t x1, uint16_t x2, uint16
     tft_disp_spi->host->hw->data_buf[0] = (uint32_t)TFT_PASET;
 	tft_disp_spi->host->hw->mosi_dlen.usr_mosi_dbitlen = 7;
 	tft_disp_spi->host->hw->cmd.usr = 1; // Start transfer
+
+#ifdef CGRAM_OFFSET
+    y1 += colstart;
+    y2 += colstart;
+#endif
 
 	wd = (uint32_t)(y1>>8);
 	wd |= (uint32_t)(y1&0xff) << 8;
@@ -802,15 +817,31 @@ void _tft_setRotation(uint8_t rot) {
     #elif TFT_INVERT_ROTATION1
     switch (rotation) {
         case PORTRAIT:
+    #ifdef CGRAM_OFFSET 
+        rowstart = CGRAM_PORTRAIT_ROWSTART;
+        colstart = CGRAM_PORTRAIT_COLSTART;
+    #endif
         madctl = (MADCTL_MY | MADCTL_MX | TFT_RGB_BGR);
         break;
         case LANDSCAPE:
+    #ifdef CGRAM_OFFSET 
+        rowstart = CGRAM_LANDSCAPE_ROWSTART; 
+        colstart = CGRAM_LANDSCAPE_COLSTART;
+    #endif
         madctl = (MADCTL_MY | MADCTL_MV | TFT_RGB_BGR);
         break;
         case PORTRAIT_FLIP:
+    #ifdef CGRAM_OFFSET 
+        rowstart = CGRAM_PORTRAIT_FLIP_ROWSTART; 
+        colstart = CGRAM_PORTRAIT_FLIP_COLSTART;
+    #endif
         madctl = (TFT_RGB_BGR);
         break;
         case LANDSCAPE_FLIP:
+    #ifdef CGRAM_OFFSET 
+        rowstart = CGRAM_LANDSCAPE_FLIP_ROWSTART; 
+        colstart = CGRAM_LANDSCAPE_FLIP_COLSTART;
+    #endif
         madctl = (MADCTL_MX | MADCTL_MV | TFT_RGB_BGR);
         break;
     }

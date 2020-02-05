@@ -167,6 +167,17 @@
 #define TFT_INVERT_ROTATION1        1
 #define TFT_INVERT_ROTATION2        0
 #define TFT_RGB_BGR                 0x08
+// New options for ST7735 and other displays that have pixel artifacts
+// around the borders 
+#define CGRAM_OFFSET                   1 // Option to use CGRAM offsets
+#define CGRAM_PORTRAIT_ROWSTART        2
+#define CGRAM_PORTRAIT_COLSTART        3
+#define CGRAM_LANDSCAPE_ROWSTART       3
+#define CGRAM_LANDSCAPE_COLSTART       2
+#define CGRAM_PORTRAIT_FLIP_ROWSTART   2
+#define CGRAM_PORTRAIT_FLIP_COLSTART   1
+#define CGRAM_LANDSCAPE_FLIP_ROWSTART  1
+#define CGRAM_LANDSCAPE_FLIP_COLSTART  2
 
 #define USE_TOUCH   TOUCH_TYPE_NONE
 
@@ -277,6 +288,10 @@ typedef struct __attribute__((__packed__)) {
 	uint8_t g;
 	uint8_t b;
 } color_t ;
+
+// Support CGRAM_OFFSET
+extern uint32_t rowstart;
+extern uint32_t colstart;
 
 // ==== Display commands constants ====
 #define TFT_INVOFF     0x20
