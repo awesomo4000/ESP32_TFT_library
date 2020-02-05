@@ -26,7 +26,7 @@ config TFT_PREDEFINED_DISPLAY_TYPE
         config TFT_PREDEFINED_DISPLAY_TYPE3
             bool "M5Stack TFT Display"
         config TFT_PREDEFINED_DISPLAY_TYPE5
-            bool "OS2020 ST7735R GREENTAB3 128x128"
+            bool "OS2019 ST7735R GREENTAB3 128x128"
     endchoice
 
 if TFT_PREDEFINED_DISPLAY_TYPE0

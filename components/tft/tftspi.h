@@ -155,7 +155,7 @@
 
 #elif CONFIG_TFT_PREDEFINED_DISPLAY_TYPE == 5
 
-// ** Set the correct configuration for OS2020 ST7735R GREENTAB3 128x128
+// ** Set the correct configuration for OS2019 ST7735R GREENTAB3 128x128
 // ---------------------------------------------------------------------
 #define DEFAULT_DISP_TYPE           DISP_TYPE_ST7735R
 #define DEFAULT_TFT_DISPLAY_WIDTH   128
